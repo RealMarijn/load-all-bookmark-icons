@@ -1,4 +1,4 @@
-# Bookmark Icon Loader
+# Bookmark Icon Loader Firefox Extension
 
 A Firefox extension that loads the websites in your bookmarks to ensure their favicons are properly cached by Firefox.
 
