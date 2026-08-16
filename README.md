@@ -1,145 +1,75 @@
-# 📑 Bookmark Icon Loader - Firefox Extension
+# Bookmark Icon Loader
 
-A Firefox extension that loads all websites in your bookmarks (including nested folders) to ensure their favicons are properly cached by the browser.
+A Firefox extension that loads the websites in your bookmarks to ensure their favicons are properly cached by Firefox.
 
-## 🎯 Purpose
+This is useful when bookmark icons appear as generic placeholders instead of the website's actual favicon. The extension briefly loads each bookmarked site, including bookmarks inside nested folders, allowing Firefox to retrieve and cache its icon.
 
-This extension solves the common problem where bookmark icons (favicons) appear as generic placeholders instead of the actual website icons. By visiting each bookmarked site briefly, it forces Firefox to load and cache the proper favicons.
+## Installation
 
-## 🚀 Features
+Install Bookmark Icon Loader from Firefox Add-ons:
 
-- **Comprehensive Loading**: Processes all bookmarks, including those in nested folders
-- **Safety First**: Built-in delays and timeouts to prevent system crashes
-- **Memory Management**: Automatically closes tabs after loading to save resources  
-- **Progress Tracking**: Real-time progress updates with current URL display
-- **Configurable Settings**: Adjustable delays, timeouts, and batch sizes
-- **Background Processing**: Runs in background tabs to avoid interfering with your browsing
+https://addons.mozilla.org/en-US/firefox/addon/bookmark-icons-loader/
 
-## 🔧 Installation
+### Development
 
-### Option 1: Load as Temporary Extension (Development)
-1. Open Firefox and go to `about:debugging`
-2. Click "This Firefox" in the sidebar
-3. Click "Load Temporary Add-on"
-4. Select the `manifest.json` file from this directory
-5. The extension will appear in your toolbar
+To load the extension locally:
 
-### Option 2: Package for Distribution
-1. Zip all files in this directory (except README.md)
-2. Submit to Firefox Add-ons store or install the .xpi file
+1. Open `about:debugging` in Firefox.
+2. Select **This Firefox**.
+3. Click **Load Temporary Add-on**.
+4. Select `manifest.json`.
 
-## 📖 How to Use
+## Usage
 
-1. **Click the extension icon** in your Firefox toolbar
-2. **Click "Start Loading"** to begin processing your bookmarks
-3. **Monitor progress** in the popup window
-4. **Adjust settings** if needed via the Settings link
+1. Click the extension icon in the Firefox toolbar.
+2. Click **Start Loading**.
+3. The extension processes your bookmarks and displays its progress.
+4. Tabs are automatically closed after loading.
 
-The extension will:
-- Scan all your bookmarks and folders
-- Open each website in a background tab
-- Wait for the page and favicon to load
-- Close the tab automatically
-- Move to the next bookmark with a small delay
+The process can be stopped at any time.
 
-## ⚙️ Settings
+## Features
 
-Access settings by clicking the "⚙️ Settings" link in the popup:
+* Processes all bookmarks, including nested folders
+* Loads websites in background tabs
+* Automatically closes tabs after loading
+* Displays loading progress and the current URL
+* Skips websites that exceed the configured timeout
+* Configurable delay, timeout, and batch size
+* Settings are saved between uses
 
-- **Delay Between Loads**: Time to wait between each bookmark (default: 2000ms)
-- **Page Load Timeout**: Maximum time to wait for each page (default: 10000ms)  
-- **Batch Size**: Number of tabs to open simultaneously (default: 1, recommended)
-- **Close After Load**: Automatically close tabs after loading (recommended: enabled)
+## Settings
 
-## 🛡️ Safety Features
+The following options can be configured from the extension's settings page:
 
-- **Memory Protection**: Automatically closes tabs to prevent memory buildup
-- **System Load Management**: Configurable delays prevent overwhelming your system
-- **Timeout Protection**: Pages that don't load are automatically skipped
-- **Progress Tracking**: Always know what's happening and how much is left
-- **Easy Stop Button**: Cancel the process anytime
+| Setting             |  Default | Description                               |
+| ------------------- | -------: | ----------------------------------------- |
+| Delay Between Loads |  2000 ms | Delay before processing the next bookmark |
+| Page Load Timeout   | 10000 ms | Maximum time to wait for a website        |
+| Batch Size          |        1 | Number of websites loaded simultaneously  |
+| Close After Load    |  Enabled | Automatically closes tabs after loading   |
 
-## 🎛️ Recommended Settings
+The defaults are recommended for most users. For large bookmark collections or slower systems, increasing the delay can reduce resource usage.
 
-For most users, the default settings work well:
-- **Delay**: 2000ms (2 seconds) - good balance of speed and safety
-- **Timeout**: 10000ms (10 seconds) - allows slow sites to load
-- **Batch Size**: 1 - prevents crashes and browser slowdown
-- **Close After Load**: Enabled - essential for memory management
+## Permissions
 
-For faster systems or fewer bookmarks, you can reduce the delay to 1000ms.
-For slower systems or many bookmarks, increase the delay to 3000-5000ms.
+The extension requires:
 
-## 🔍 Technical Details
+* `bookmarks` — read the bookmark structure
+* `tabs` — open and close tabs
+* `storage` — save extension settings
+* `<all_urls>` — load websites contained in your bookmarks
 
-### Permissions Required
-- `bookmarks`: Read your bookmark structure
-- `tabs`: Create and manage tabs for loading sites
-- `storage`: Save your settings preferences
-- `<all_urls>`: Access any website in your bookmarks
+## Notes
 
-### File Structure
-```
-📁 Extension Root
-├── 📄 manifest.json          # Extension configuration
-├── 📄 background.js          # Core loading logic
-├── 📄 popup.html            # User interface
-├── 📄 popup.js              # Popup functionality  
-├── 📄 options.html          # Settings page
-├── 📄 options.js            # Settings functionality
-└── 📁 icons/                # Extension icons
-    ├── 🖼️ icon-16.png
-    ├── 🖼️ icon-32.png  
-    ├── 🖼️ icon-48.png
-    └── 🖼️ icon-128.png
-```
+Loading a large bookmark collection can temporarily increase CPU, memory, and network usage. Websites that are unavailable will time out and be skipped.
 
-## ⚠️ Important Notes
+Some bookmarks may still lack icons if the corresponding website does not provide a favicon or Firefox is unable to retrieve it.
 
-1. **Large Bookmark Collections**: If you have hundreds of bookmarks, consider increasing the delay between loads to avoid overwhelming your system.
+## Contributing
 
-2. **System Resources**: The extension is designed to be lightweight, but loading many sites will temporarily increase CPU and memory usage.
+Contributions are welcome. Fork the repository, make and test your changes, and submit a pull request.
 
-3. **Network Usage**: Each bookmark will generate a web request. Be mindful if you have limited bandwidth.
+## License
 
-4. **Broken Bookmarks**: Sites that are down or have moved will timeout and be skipped automatically.
-
-## 🐛 Troubleshooting
-
-**Extension won't start loading:**
-- Check that you have bookmarks to load
-- Verify the extension has proper permissions
-- Try reloading the extension in about:debugging
-
-**Browser becomes slow during loading:**
-- Increase the delay between loads in settings
-- Ensure "Close After Load" is enabled
-- Consider loading bookmarks in smaller batches
-
-**Some icons still don't appear:**
-- Some sites may not have favicons
-- Try visiting those sites manually
-- Clear browser cache and try again
-
-## 🤝 Contributing
-
-This is a focused extension with a specific purpose. If you'd like to contribute:
-1. Fork the repository
-2. Make your changes
-3. Test thoroughly with various bookmark collections
-4. Submit a pull request
-
-## 📝 License
-
-This extension is provided as-is for personal use. Feel free to modify and distribute according to your needs.
-
-## 🆘 Support
-
-If you encounter issues:
-1. Check the browser console for error messages
-2. Try the troubleshooting steps above
-3. Create an issue with details about your bookmark collection size and system specs
-
----
-
-**Happy bookmark organizing!** 🔖✨
+This extension is provided as-is for personal use. See the repository license for details.
